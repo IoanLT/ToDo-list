@@ -1,32 +1,35 @@
 import './App.css';
+import Header from './components/layout/Header'
 import TodoList from './components/TodoList'
+import AddTodo from './components/AddTodo'
 import React, { Component } from 'react'
+import { v4 as uuidv4 } from 'uuid';
 
 export default class App extends Component {
   state = {
     todos: [
       {
-        id: 1,
+        id: uuidv4(),
         title: 'Take out rubish',
         completed: false
       },
       {
-        id: 2,
+        id: uuidv4(),
         title: 'Cook dinner',
         completed: false
       },
       {
-        id: 3,
+        id: uuidv4(),
         title: 'Play StarCraft',
         completed: false
       },
       {
-        id: 4,
+        id: uuidv4(),
         title: 'Watch Teletubbies then shoot myself',
         completed: false
       },
       {
-        id: 5,
+        id: uuidv4(),
         title: 'Watch another state and props tutorial and hope for the best',
         completed: false
       }
@@ -46,7 +49,7 @@ export default class App extends Component {
       })
     })
   }
-
+  
   // Delete todo
   delTodo = (id) => {
     this.setState({
@@ -56,19 +59,33 @@ export default class App extends Component {
     })
   }
 
-  render() {
-    // console.log(this.state.todos);
+  // Add todo
+  addTodo = (title) => {
+    const newTodo = {
+      id: uuidv4(),
+      title: title,
+      completed: false
+    }
+    this.setState({      
+      todos: [...this.state.todos, newTodo]
+    })
+  }
+
+  render() {    
     return (
       <div className="App">
-        <h1>Todo list:</h1>
-        <TodoList 
-          thingsToDo={this.state.todos} 
-          markComplete={this.markComplete}
-          delTodo={this.delTodo} 
-        />      
+        <div className="container">
+          <Header />
+          <AddTodo addTodo={this.addTodo} />
+          <TodoList 
+            thingsToDo={this.state.todos} 
+            markComplete={this.markComplete}
+            delTodo={this.delTodo} 
+          />   
+        </div>
+           
       </div>
     )
   }
 }
-
 
